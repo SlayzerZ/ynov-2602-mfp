@@ -1,0 +1,20 @@
+name: Test jest function
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches: [master]
+
+jobs:
+  unit-test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+      - run: cd server
+      - run: npm install
+      - run: npm run test
