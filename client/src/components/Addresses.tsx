@@ -37,12 +37,17 @@ export default function Addresses({ onViewMap }: AddressesProps) {
         },
       });
 
-      if (viewMode === 'mine' && user) {
-        // query = query.eq('user_id', user.id);
-      }
+      let query2 = await fetch(`${API_URL}/addresses/my`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       let data = await query.json();
 
+      if (viewMode === 'mine' && user) {
+        data = await query2.json();
+      }
       // if (error) throw error;
       // console.log("Data:", data)
       setAddresses(data.items || []);
@@ -74,6 +79,8 @@ export default function Addresses({ onViewMap }: AddressesProps) {
       if (!response.ok) {
         return { error: data };
       }
+
+      window.location.reload();
 
       return { error: null };
     } catch (error) {

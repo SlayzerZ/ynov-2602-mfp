@@ -65,6 +65,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return { error: data };
       }
 
+      const newresponse = await fetch(`${API_URL}/users/tokens`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const newdata = await newresponse.json();
+
+      const token = newdata.token;
+
+      localStorage.setItem('token', token);
+
+      setUser(data);
+
       return { error: null };
     } catch (error) {
       return { error };

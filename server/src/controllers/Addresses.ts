@@ -34,9 +34,14 @@ addressesRouter.post("/", isAuthorized, async (req, res) => {
   }
 });
 
-addressesRouter.get("/", isAuthorized, async (req, res) => {
+addressesRouter.get("/my", isAuthorized, async (req, res) => {
   const user = await getUserFromRequest(req);
   const addresses = await Address.findBy({ user: { id: user.id } });
+  return res.json({ items: addresses });
+});
+
+addressesRouter.get("/", isAuthorized, async (req, res) => {
+  const addresses = await Address.find();
   return res.json({ items: addresses });
 });
 
