@@ -192,9 +192,9 @@ export default function Addresses({ onViewMap }: AddressesProps) {
                   <div>
                     <div className="font-semibold">{result.name}</div>
                     <div className="text-sm text-gray-600">{result.description}</div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      {/* Stock: {result.stock} | Distance: {result.distance?.toFixed(2)} km */}
-                    </div>
+                    {/* <div className="text-xs text-gray-500 mt-1">
+                      Stock: {result.stock} | Distance: {result.distance?.toFixed(2)} km
+                    </div> */}
                   </div>
                 </div>
               ))}
@@ -325,10 +325,10 @@ export default function Addresses({ onViewMap }: AddressesProps) {
                       {address.lat.toFixed(4)}, {address.lng.toFixed(4)}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     <Package className="w-4 h-4" />
-                    {/* <span>Stock: {address.stock}</span> */}
-                  </div>
+                    <span>Stock: {address.stock}</span>
+                  </div> */}
                 </div>
               </div>
             ))}

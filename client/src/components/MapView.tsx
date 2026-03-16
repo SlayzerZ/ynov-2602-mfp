@@ -10,7 +10,7 @@ export default function MapView({ onBack }: MapViewProps) {
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [loading, setLoading] = useState(true);
-  const API_URL = 'http://localhost:3000/api';
+  const API_URL = 'http://localhost:3000/api/addresses';
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -20,14 +20,14 @@ export default function MapView({ onBack }: MapViewProps) {
   const fetchAddresses = async () => {
     setLoading(true);
     try {
-      let data = fetch(`${API_URL}/addresses`, {
+      let query = await fetch(`${API_URL}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
-
-      // if (error) throw error;
-      // setAddresses(data || []);
+      })
+      let data = await query.json()
+      // console.log(data)
+      setAddresses(data.items || []);
     } catch (error) {
       console.error('Error fetching addresses:', error);
     } finally {
@@ -139,13 +139,13 @@ export default function MapView({ onBack }: MapViewProps) {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-2">
+                    {/* <div className="flex items-start gap-2">
                       <Package className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" />
                       <div>
                         <div className="font-medium">Stock</div>
-                        {/* <div className="text-gray-600">{selectedAddress.stock} units</div> */}
+                        <div className="text-gray-600">{selectedAddress.stock} units</div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
 
                   <button
@@ -164,9 +164,9 @@ export default function MapView({ onBack }: MapViewProps) {
                       className="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition"
                     >
                       <div className="font-semibold text-sm">{address.name}</div>
-                      <div className="text-xs text-gray-600 mt-1">
-                        {/* Stock: {address.stock} */}
-                      </div>
+                      {/* <div className="text-xs text-gray-600 mt-1">
+                        Stock: {address.stock}
+                      </div> */}
                     </button>
                   ))}
                 </div>

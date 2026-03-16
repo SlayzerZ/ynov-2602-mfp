@@ -1,4 +1,4 @@
-import { map } from "./mapping"
+import { map, filter } from "./mapping"
 
 describe("Mapping Array", () => {
     const numbers = [1, 2, 3, 4, 5];
@@ -22,3 +22,21 @@ describe("Mapping Array", () => {
         });
     })
 })
+
+describe("Array filter", () => {
+    it("should keep even numbers", () => {
+        const numbers = [1, 2, 3, 4, 5];
+
+        const result = filter(numbers, n => n % 2 === 0);
+
+        expect(result).toEqual([2, 4]);
+    });
+
+    it("should return empty array if no match", () => {
+        const numbers = [1, 3, 5];
+
+        const result = filter(numbers, n => n % 2 === 0);
+
+        expect(result).toEqual([]);
+    });
+});

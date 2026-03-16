@@ -7,3 +7,15 @@ export function map(items: any[], changeItem: (item: any) => any): any[] {
 
     return result;
 }
+
+export function filter(items: any[], predicate: (item: any) => boolean): any[] {
+    const result: any[] = [];
+
+    for (let i = 0; i < items.length; i++) {
+        if (predicate(items[i])) {
+            result.push(items[i]);
+        }
+    }
+
+    return result;
+}

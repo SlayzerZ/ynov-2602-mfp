@@ -3,7 +3,8 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Auth from './components/Auth';
 import Addresses from './components/Addresses';
 import MapView from './components/MapView';
-import { LogOut, Warehouse } from 'lucide-react';
+import { LogOut } from 'lucide-react';
+import Logo from "./public/Logo.png"
 
 function AppContent() {
   const { user, loading, signOut } = useAuth();
@@ -30,7 +31,7 @@ function AppContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
-              <Warehouse className="w-8 h-8 text-blue-600" />
+              <img className="w-16 h-8 text-blue-600" src={Logo} />
               <h1 className="text-xl font-bold text-gray-800">Address Manager</h1>
             </div>
             <div className="flex items-center gap-4">
