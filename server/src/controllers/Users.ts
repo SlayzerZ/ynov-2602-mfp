@@ -21,6 +21,10 @@ usersRouter.post("/", async (req, res) => {
     const user = new User();
     user.email = email;
     user.hashedPassword = await argon2.hash(password);
+    let isUser = await User.findOneBy({ email: req.body.email });
+    if (isUser) {
+      return res.status(403).json({ message: "Email Already Exists" });
+    }
     await user.save();
     return res.json({ item: user });
   } catch (e) {
