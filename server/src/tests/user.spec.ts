@@ -23,6 +23,18 @@ describe("Post Create User", () => {
             .expect(200);
         expect(res.body.item.email).toEqual(form.email);
     });
+    it("should'nt create a new user with infos already used", async () => {
+        const form = {
+            email: data["email"],
+            password: data["password"]
+        }
+        const res = await request(app)
+            .post("/api/users")
+            .send(form)
+            .set('Accept', 'application/json')
+            .expect(403);
+        expect(res.body.message).toEqual("Email Already Exists");
+    });
 });
 
 describe("Get Token and log", () => {
