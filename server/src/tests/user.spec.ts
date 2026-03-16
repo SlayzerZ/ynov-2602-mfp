@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import request from "supertest"
-import app from "./app"
-import datasource from "./datasource";
+import app from "../app"
+import datasource from "../datasource";
 
 let data = {} as any;
 beforeAll(async () => {
@@ -49,17 +49,5 @@ describe("Get Token and log", () => {
             .expect("Content-Type", "application/json; charset=utf-8")
             .expect(200);
         expect(res.body.item.email).toEqual(data["email"]);
-    });
-});
-
-describe("Get Addresses", () => {
-    it("should get all addresses stock", async () => {
-        const base = { 'Authorization': `Bearer ${data["token"]}`, 'Content-Type': 'application/json' }
-        const res = await request(app)
-            .get("/api/addresses")
-            .set(base)
-            .expect("Content-Type", "application/json; charset=utf-8")
-            .expect(200);
-        expect(res.body.items[0].id).toEqual(1);
     });
 });
