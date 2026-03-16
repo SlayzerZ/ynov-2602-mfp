@@ -53,3 +53,15 @@ describe("Put Modify Address", () => {
         expect(res.body.item.description).toEqual(form.description);
     });
 });
+
+describe("Delete Address", () => {
+    it("should delete a existing address", async () => {
+        const base = { 'Authorization': `Bearer ${data["token"]}`, 'Content-Type': 'application/json' }
+        const res = await request(app)
+            .delete("/api/addresses/3")
+            .set(base)
+            .expect("Content-Type", "application/json; charset=utf-8")
+            .expect(200);
+        expect(res.body.message).toEqual("Address deleted");
+    });
+});
