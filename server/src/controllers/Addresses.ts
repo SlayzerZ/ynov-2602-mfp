@@ -45,6 +45,17 @@ addressesRouter.get("/", isAuthorized, async (req, res) => {
   return res.json({ items: addresses });
 });
 
+addressesRouter.put("/:id", isAuthorized, async (req, res) => {
+  let address = await Address.findOneBy({ id: Number(req.params.id) });
+  if (!address) {
+    return res.status(404).json({ message: "Address not found" });
+  }
+  address.name = req.body.name;
+  address.description = req.body.description;
+  await address.save()
+  return res.json({ item: address });
+});
+
 addressesRouter.post("/searches", isAuthorized, async (req, res) => {
   const radius = req.body.radius;
 
