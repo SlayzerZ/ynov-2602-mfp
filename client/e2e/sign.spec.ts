@@ -11,7 +11,13 @@ test('has sign up page', async ({ page }) => {
 
 test('Do an sign up procedure', async ({ page }) => {
     const form = { email: faker.internet.email(), password: faker.internet.password() }
-    console.log("User Data: ", form);
+    console.log("I_User Data: ", form);
+    // await page.route('http://localhost:3000/api/users', async route => {
+    //     await route.fulfill({
+    //         status: 200,
+    //         body: JSON.stringify({ success: true })
+    //     });
+    // });
     await page.goto('http://localhost:5173/');
 
     await page.getByRole('button', { name: 'Sign up' }).click();
@@ -26,7 +32,7 @@ test('Do an sign up procedure', async ({ page }) => {
 
 test('Do an sign in procedure', async ({ page }) => {
     const form = { email: "mac@mac.com", password: "azertyuiop" }
-    console.log("User Data: ", form);
+    console.log("C_User Data: ", form);
     await page.goto('http://localhost:5173/');
 
     await page.getByLabel('Email Address').fill(form.email);
