@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import request from "supertest"
-import app from "../app"
-import datasource from "../datasource";
+import app from "./app"
+import datasource from "./datasource";
 
 let data = {} as any;
 beforeAll(async () => {
