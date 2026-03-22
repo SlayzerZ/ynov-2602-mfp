@@ -1,0 +1,67 @@
+name: Full Stack Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      # 📥 Checkout
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # 🟢 Setup Node
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # =========================
+      # 🔙 BACKEND
+      # =========================
+      - name: Install backend deps
+        working-directory: ./server
+        run: npm install
+
+      - name: Run backend tests (Jest)
+        working-directory: ./server
+        run: npm run test
+
+      - name: Start backend
+        working-directory: ./server
+        run: |
+          npm run dev &
+
+      # ⏳ Attendre que le serveur soit prêt
+      - name: Wait for backend
+        run: npx wait-on http://localhost:3000
+
+      # =========================
+      # 🔜 FRONTEND
+      # =========================
+      - name: Install frontend deps
+        working-directory: ./client
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        working-directory: ./client
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        working-directory: ./client
+        run: npx playwright test
+
+      # 📦 Upload report
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: client/playwright-report/
+          retention-days: 30
