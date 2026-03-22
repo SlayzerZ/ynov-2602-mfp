@@ -36,11 +36,16 @@ jobs:
       - name: Start backend
         working-directory: ./server
         run: |
-          npm run dev &
+          npm run dev > server.log 2>&1 &
+            sleep 5
+            cat server.log
 
       # ⏳ Attendre que le serveur soit prêt
       - name: Wait for backend
-        run: npx wait-on http://localhost:3000
+        run: npx wait-on http://localhost:3000 --timeout 30000
+
+      - name: Debug backend
+        run: curl -v http://localhost:3000 || true
 
       # =========================
       # 🔜 FRONTEND
